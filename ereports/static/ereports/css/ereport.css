@@ -1,0 +1,82 @@
+table td {
+    padding: 5px;
+}
+
+.row1 {
+    background-color: #ddd;
+}
+
+#header {
+    width: 100%;
+    /*border-bottom: 1px solid #000000;*/
+}
+
+#header>* {
+    text-align: center;
+}
+
+#header .first {
+    width: 200px;
+}
+
+.clear {
+    clear: both;
+}
+
+table.data {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.data tr.header th.column {
+    padding: 10px;
+    border-left: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+
+table.data tr.header th.column.first {
+    border-left: 1px solid #000000;
+}
+
+table.data tr.header th.column.last {
+    border-right: 1px solid #000000;
+}
+
+table.data .row td.cell {
+    height: 10px;
+    border-left: 1px solid #000000;
+}
+
+table.data .row td.cell.last {
+    border-right: 1px solid #000000;
+}
+
+table.data .row.last td.cell {
+    border-bottom: 1px solid #000000;
+}
+
+.totals th, .subtotals th {
+    text-align: right;
+    padding-bottom: 20px;
+}
+
+.col_ereports_engine_columns_decimalcolumn {
+    text-align: right;
+    /*color: red;*/
+}
+
+.col_ereports_engine_columns_datecolumn {
+    text-align: right;
+    /*color: #0000ff;*/
+}
+
+.col_ereports_engine_columns_integercolumn {
+    text-align: right;
+    /*color: yellow;*/
+}
+
+.col_ereports_engine_columns_charcolumn {
+    text-align: left;
+    /*color: orangered;*/
+}

@@ -1,0 +1,63 @@
+@page {
+    size: A4 landscape;
+    margin: 1cm 0.25cm 0.5cm 0.25cm;
+}
+
+table.data {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+}
+
+.header .column {
+    background-color: #B8E7DF;
+    border-color: #6896FF;
+    border-left: 1px solid #6896FF;
+    border-right: 0 solid #6896FF;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    color: #000000;
+    font-size: 9px;
+    height: 20px;
+    padding-left: 1px;
+    padding-right: 1px;
+    text-align: center;
+}
+
+.cell {
+    padding: 5px;
+}
+
+th.total {
+    padding-top: 10px;
+}
+
+.subtotals th {
+    background-color: #99CCFF;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+.currency, .int, .numeric {
+    text-align: right;
+}
+
+.nobr {
+    white-space: nowrap;
+}
+
+tr.dutystation_row td {
+    border-bottom: #000000 1px solid;
+    padding-top: 15px;
+    vertical-align: bottom;
+}
+
+.dutystation {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.nobordspacpad {
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+}

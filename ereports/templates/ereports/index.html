@@ -1,0 +1,41 @@
+{% load url from future %}
+{% block content %}
+    <style>
+        h2 {
+            width: 100%;
+            border-bottom: 3px solid #000000;
+            font-weight: bold;
+        }
+
+        table.reports td {
+            line-height: 30px;
+            border-bottom: 1px solid #000000;
+        }
+
+        td.format {
+            width: 80px;
+            text-align: center;
+            border-left: 1px solid #000000;
+
+        }
+
+    </style>
+    <div>&nbsp;</div>
+    {% regroup reports by group as report_list %}
+
+    {% for group in report_list %}
+        <h2><span class="section">{{ group.grouper }}</span></h2>
+        <table width="100%" cellpadding="0" cellspacing="0" class="reports payroll">
+            {% for report in group.list %}
+                <tr>
+                    <td class='first'>
+                        <a href="{% url 'ereports.filter_report' report.pk %}">
+                            {{ report }}
+                        </a>
+                    </td>
+                    <td>{{ report.description }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% endblock %}

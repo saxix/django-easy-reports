@@ -1,0 +1,13 @@
+.idea
+.tox
+.cache
+/dist
+/build
+*.egg-info
+*.log
+*.pot
+*.pyc
+*.sqlite
+~*
+MANIFEST
+.coverage
