@@ -9,7 +9,7 @@ django-easy-reports
 .. note:: This project is under heavy development, do not use in production
 
 
-|app| is a reports engine for Django applications. The purpose of the project is to provide
+django-easy-reports is a reports engine for Django applications. The purpose of the project is to provide
 a flexible report engine where the end user is free to customize parts of the reports.
 
 
