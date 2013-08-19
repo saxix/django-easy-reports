@@ -14,7 +14,8 @@ demo:
 	pip install -r ereports/requirements/install.pip
 	pip install -r ereports/requirements/testing.pip
 	pip install -r demo/demoproject/requirements.pip
-	./manage.py syncdb --noinput --migrate --all
+	./manage.py syncdb --noinput --migrate
+	./manage.py loaddata ereports_demo.json
 	./manage.py register_report -m demoproject.demoapp.reports
 
 

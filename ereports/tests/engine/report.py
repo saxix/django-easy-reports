@@ -101,20 +101,20 @@ class TestBaseReport(WebTest):
             BaseReport.as_report(models=SimpleDemoModel)
 
     def test_slice(self):
-        G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
+        instances = G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
         r = BaseReport.as_report(model=SimpleDemoModel)
-        self.assertSequenceEqual(list(r[:1]), [(1, u'abc', 10, 20, True)])
+        self.assertSequenceEqual(list(r[:1]), [(instances[0].pk, u'abc', 10, 20, True)])
 
     def test_getitem(self):
-        G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
+        instances = G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
         r = BaseReport.as_report(model=SimpleDemoModel)
-        self.assertSequenceEqual(r[1].values(), (2, u'abc', 10, 20, True))
+        self.assertSequenceEqual(r[1].values(), (instances[1].pk, u'abc', 10, 20, True))
 
     def test_datasource(self):
-        G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
+        instances = G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20, boolean=True)
         ds = Datasource.as_datasource(model=SimpleDemoModel)
         r = BaseReport.as_report(datasource=ds)
-        self.assertSequenceEqual(r[1].values(), (2, u'abc', 10, 20, True))
+        self.assertSequenceEqual(r[1].values(), (instances[1].pk, u'abc', 10, 20, True))
 
     def test_datasource_custom_list_display(self):
         G(SimpleDemoModel, n=2, char='abc', integer1=10, integer2=20)

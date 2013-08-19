@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     {% load ereports static %}
-    <title></title>
+    <title>{{ report.title }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="{% static 'ereports/css/ereport.css' %}"/>
     {% block extrastyle %}{% endblock %}
@@ -12,7 +12,7 @@
     <table id="header" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td class="first" valign="top">
-                created on<br/> {% now "jS b Y H:i e" %}
+                created on<br/> {% now "jS F Y H:i e" %}
             </td>
             <td class="second">
                 <div class="text">

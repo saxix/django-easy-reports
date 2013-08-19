@@ -53,8 +53,8 @@ class ReportConfiguration(models.Model):
     #                               choices=[(k, k) for k, v in postprocessor.registry.iteritems()])
 
     published = models.BooleanField(default=False)
-    # select_related = models.BooleanField(default=False)
-    # use_distinct = models.BooleanField(default=False)
+    select_related = models.BooleanField(default=False)
+    use_distinct = models.BooleanField(default=False)
 
     columns = models.TextField(default='id\n')
     filtering = models.TextField(blank=True, null=True, default="")
@@ -69,8 +69,8 @@ class ReportConfiguration(models.Model):
     # extras = models.TextField(blank=True, null=True)
     # rawsql = models.TextField(blank=True, null=True)
 
-    # ttl = models.IntegerField('Cache validity (minutes)', default=0)
-    # cache_key = models.CharField('Cache entry seed', max_length=200, null=False, unique=True, default=keygen)
+    ttl = models.IntegerField('Cache validity (minutes)', default=0)
+    cache_key = models.CharField('Cache entry seed', max_length=200, null=False, unique=True, default=keygen)
 
     class Meta:
         permissions = (('run_report', 'Can run a report'),
@@ -117,14 +117,3 @@ class ReportConfiguration(models.Model):
                 if '=' not in line:
                     filters.append(line.strip())
         return filters
-
-
-class ProcessQueue(models.Model):
-    report = models.ForeignKey(ReportConfiguration)
-    configuration = models.TextField()
-    executed = models.DateField(null=True, editable=False, default=None)
-
-    class Meta:
-        permissions = (('run_report', 'Can run a report'),
-                       ('read_report', 'Can read a report'),)
-        app_label = 'ereports'
