@@ -25,6 +25,15 @@ clean:
 	find . -name "*.orig" -prune | xargs rm -rf
 	rm -f coverage.xml flake.out pep8.out pytest.xml
 
+pep8:
+	pep8 demo/ ereports/ \
+	    --max-line-length=120 \
+	    --exclude=migrations,factories,settings,tests \
+	    --ignore E501,E401,W391,E128,E261
+
+flake8:
+	flake8 --max-line-length=120 --exclude=migrations,factories,settings,tests \
+	    --ignore=E501,E401,W391,E128,E261 --format pylint demo/ ereports/
 
 docs:
 	mkdir -p ${BUILDDIR}/docs

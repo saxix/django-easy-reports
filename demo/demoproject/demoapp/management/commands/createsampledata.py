@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.core.management.base import BaseCommand, CommandError
-from optparse import make_option
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):

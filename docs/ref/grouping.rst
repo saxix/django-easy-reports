@@ -1,3 +1,6 @@
+.. include:: ../globals
+.. _ref_grouping:
+
 =============
 Grouping
 =============
@@ -7,4 +10,3 @@ Grouping
 
 
 .. class:: BaseGrouper
-

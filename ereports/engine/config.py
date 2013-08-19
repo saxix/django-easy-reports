@@ -304,8 +304,7 @@ def reportform_factory(report, bases=(ConfigurationForm,), **kwargs):
         else:
             attrs['_format'] = forms.CharField(label='Format',
                                                widget=HiddenInput,
-                                               initial=report.formats[0][0]
-            )
+                                               initial=report.formats[0][0])
 
         field_display_order.append('_format')
 

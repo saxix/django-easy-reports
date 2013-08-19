@@ -1,4 +1,4 @@
-.. include:: globals.rst
+.. include:: globals
 
 .. _install:
 
@@ -25,10 +25,7 @@ Add urls to your urls.py
 
 .. code-block:: python
 
-urlpatterns = patterns('',
+    urlpatterns = patterns('',
         ...
-        (r'^ereports/', include(include(ereports.urls))),
+        (r'^ereports/', include(ereports.urls)),
     )
-
-
-

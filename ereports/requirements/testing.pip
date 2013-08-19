@@ -10,4 +10,4 @@ pytest-cov==1.6
 pytest-django==2.3.0
 pytest-pep8==1.0.4
 WebTest==2.0.6
-
+Sphinx==1.2b1

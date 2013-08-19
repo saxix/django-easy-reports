@@ -1,3 +1,6 @@
+.. include:: ../globals
+.. _ref_widgets:
+
 =============
 Widgets
 =============
@@ -19,4 +22,3 @@ Widgets
 
 
 .. class:: TimeWidgett
-
