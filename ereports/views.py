@@ -29,7 +29,6 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
     """ Filter and generated selected report
     """
     template_name = 'ereports/filter.html'
-    permissions = ['ereports.read_report', 'ereports.run_report']
     method = 'POST'
 
     def get_config(self):
@@ -62,7 +61,7 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
             'today': today,
             'user': self.request.user,
         })
-        return kwargs
+        return super(ReportFilter, self).get_context_data(**kwargs)
 
     def get(self, request, *args, **kwargs):
         self.config = self.get_config()
