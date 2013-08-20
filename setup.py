@@ -41,7 +41,7 @@ setup(
     test_suite='conftest.runtests',
 
     description="Django reporting library ",
-    long_description=open('README').read(),
+    long_description=open('README.rst').read(),
     license="MIT License",
     keywords="django",
     classifiers=[
