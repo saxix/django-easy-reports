@@ -9,11 +9,16 @@ django-easy-reports
 .. note:: This project is under heavy development, do not use in production
 
 
-|app| is a reports engine for Django applications. The purpose of the project is to provide
-a flexible report engine where the end user is free to customize some parts ot the reports.
+django-easy-reports is a reports engine for Django applications. The purpose of the project is to provide
+a flexible report engine where the end user is free to customize parts of the reports.
 
 
+Quick Demo Installation
+-----------------------
 
+.. code-block:: bash
+
+    make demo
 
 
 Links
@@ -23,4 +28,3 @@ Links
    * Issue tracker: https://github.com/saxix/django-easy-reports/issues?sort
    * Download: http://pypi.python.org/pypi/django-easy-reports/
    * Docs: http://readthedocs.org/docs/django-easy-reports/en/latest/
-

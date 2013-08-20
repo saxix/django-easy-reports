@@ -1,4 +1,4 @@
-.. include:: globals.rst
+.. include:: globals
 
 :tocdepth: 2
 
@@ -10,5 +10,3 @@ Changes
 
 
 .. include:: ../CHANGES
-
-

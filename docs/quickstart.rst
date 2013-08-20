@@ -1,5 +1,4 @@
-.. include:: globals.rst
-
+.. include:: globals
 .. _quickstart:
 
 
@@ -15,7 +14,8 @@ Edit the :file:`reports.py` file so it looks like this
 .. code-block:: python
 
     from ereports.engine.datasource import Datasource
-    from django.contrib.admin.models import User
+    from django.contrib.auth.models import User
+
 
     class UserDataSource(Datasource):
         model = User
@@ -36,6 +36,7 @@ Edit the :file:`reports.py` file so it looks like this
 .. code-block:: python
 
     from ereports.engine.report import BaseReport
+
 
     class UserReport(BaseReport):
         datasource = UserDataSource.as_datasource()
@@ -58,9 +59,9 @@ Edit the :file:`urls.py` file so it looks like this
 
 
     urlpatterns = patterns('',
-                           (r'', include(include(ereports.urls))),
-                           (r'^admin/', include(include(public_site.urls))),
-                          )
+        ...
+        (r'', include(ereports.urls)),
+    )
 
 -------------------
 Register the Report

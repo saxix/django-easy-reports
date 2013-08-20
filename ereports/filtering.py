@@ -120,11 +120,11 @@ class FilterQuerysetMixin(object):
         return self._filter_qs(qs)
 
     def get_context_data(self, **kwargs):
-        context = super(FilterQuerysetMixin, self).get_context_data(**kwargs)
-        context.update(
-            query=self.query,
-            query_param=self.query_param,
-            searchform=self.get_search_form(self.querydict, initial=dict(self.querydict.items())),
-            query_help_message=self.get_query_help_message(),
-            search_fields=self.search_fields)
-        return context
+        kwargs.update({
+            'query': self.query,
+            'query_param': self.query_param,
+            'searchform': self.get_search_form(self.querydict, initial=dict(self.querydict.items())),
+            'query_help_message': self.get_query_help_message(),
+            'search_fields': self.search_fields,
+        })
+        return kwargs

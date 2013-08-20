@@ -1,7 +1,7 @@
-.. include:: globals.rst
+.. include:: globals
 .. _index:
 
-.. include:: ../README
+.. include:: ../README.rst
 
 Table Of Contents
 =================
@@ -28,4 +28,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`search`
-

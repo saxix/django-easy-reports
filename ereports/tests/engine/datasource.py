@@ -35,13 +35,16 @@ class TestDatasource(TestCase):
             TestDatasource.as_datasource(**kwargs)
 
     def test_create_from_model(self):
-        G(SimpleDemoModel, n=2, char='1', integer1=1, integer2=2, boolean=True)
+        instances = G(SimpleDemoModel, n=2, char='1', integer1=1, integer2=2, boolean=True)
+
+        self.assertEquals(len(instances), 2)
+
         ds = Datasource.as_datasource(model=SimpleDemoModel)
 
         self.assertSequenceEqual([c.name for c in ds.columns], ['id', 'char', 'integer1', 'integer2', 'boolean'])
         self.assertSequenceEqual([c.title for c in ds.columns],
                                  ['ID', 'Character', 'Integer #1', 'Integer #2', 'Boolean'])
-        self.assertSequenceEqual(ds, [(1, u'1', 1, 2, True), (2, u'1', 1, 2, True)])
+        self.assertSequenceEqual(ds, [(instances[0].pk, u'1', 1, 2, True), (instances[1].pk, u'1', 1, 2, True)])
 
     def test_columns(self):
         G(SimpleDemoModel, n=2, char='abc', integer1=1)
@@ -76,13 +79,16 @@ class TestDatasource(TestCase):
         self.assertSequenceEqual(ds, [(1, 3, 4), (1, 3, 4)])
 
     def test_create_from_queryset(self):
-        G(SimpleDemoModel, n=2, char='abc')
+        instances = G(SimpleDemoModel, n=2, char='abc')
+
+        self.assertEquals(len(instances), 2)
+
         ds = Datasource.as_datasource(queryset=SimpleDemoModel.objects.all(),
                                       columns=['id', 'char'])
 
         self.assertSequenceEqual([c.name for c in ds.columns], ['id', 'char'])
         self.assertSequenceEqual([c.title for c in ds.columns], ['ID', 'Character'])
-        self.assertSequenceEqual(ds, [(1, u'abc'), (2, u'abc')])
+        self.assertSequenceEqual(ds, [(instances[0].pk, u'abc'), (instances[1].pk, u'abc')])
 
     def test_get_col_by_name(self):
         G(SimpleDemoModel, n=2, char='abc')
@@ -91,18 +97,21 @@ class TestDatasource(TestCase):
         self.assertSequenceEqual([u'abc', u'abc'], [row['char'] for row in ds])
 
     def test_filter_queryset(self):
-        G(SimpleDemoModel, n=5, char='abc')
+        instances = G(SimpleDemoModel, n=5, char='abc')
+
+        self.assertEquals(len(instances), 5)
+
         ds = Datasource.as_datasource(queryset=SimpleDemoModel.objects.all(),
                                       columns=['id', 'char'])
-        ds.add_filters(id__gt=3)
-        self.assertSequenceEqual(ds, [(4, u'abc'), (5, u'abc')])
+        ds.add_filters(id__gt=instances[2].pk)
+        self.assertSequenceEqual(ds, [(instances[3].pk, u'abc'), (instances[4].pk, u'abc')])
 
     def test_post_filter(self):
-        G(SimpleDemoModel, n=5, char='abc')
+        instances = G(SimpleDemoModel, n=5, char='abc')
         ds = Datasource.as_datasource(queryset=SimpleDemoModel.objects.all(),
                                       columns=['id', 'char'])
-        ds.add_filters(id__gt=3)
-        self.assertSequenceEqual(ds, [(4, u'abc'), (5, u'abc')])
+        ds.add_filters(id__gt=instances[2].pk)
+        self.assertSequenceEqual(ds, [(instances[3].pk, u'abc'), (instances[4].pk, u'abc')])
 
     def test_cachemanager(self):
         ds = Datasource.as_datasource(model=SimpleDemoModel, use_cache=False)

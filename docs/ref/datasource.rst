@@ -1,3 +1,6 @@
+.. include:: ../globals
+.. _ref_datasource:
+
 =============
 Datasource
 =============

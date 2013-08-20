@@ -1,3 +1,6 @@
+.. include:: ../globals
+.. _tutorial_tutorial01:
+
 =====================================
 Writing your first Report, part 1
 =====================================
@@ -9,19 +12,19 @@ full featured report.
 
 It'll consist of many parts:
 
-* Creating a :class:`~ereports.engine.datasource.Datasource` one related :class:`~ereports.engine.report.Report`
+* Creating a :ref:`ref_datasource` one related :ref:`ref_report`
 * Define one or more :ref:`ref_renderers`
-* Customize the Report columns using proper :ref:`_ref_columns`
-* Allow the user to add some cutomization like :ref:`filtering` or :ref:`columns_ordering`
-* Use custom widgets
-* Define a custom cache manager
+* Customize the Report columns using proper :ref:`ref_columns`
+* Allow the user to add some cutomization like :ref:`ref_filtering`
+* Use custom :ref:`ref_widgets`
+* Define a custom :ref:`ref_cache` manager
 
 
 Creating the Reports package
 ============================
 
 For this tutorial we'll create a Report of the users of our website, and the report
-will be exportable in ``.xls``, ``pdf`` and ``html``.
+will be exportable in ``.xls``, and ``html``.
 
 Create a package named ``reports`` in your application to be like::
 
@@ -36,7 +39,7 @@ Create a package named ``reports`` in your application to be like::
 Create the Datasource
 ====================================
 
-The :class:`~ereports.engine.datasource.Datasource` contains the data that you want to
+The :ref:`ref_datasource` contains the data that you want to
 display in your reports. Each Datasource can provide data to many reports.
 
 
@@ -45,7 +48,8 @@ Edit the :file:`users.py` file so it looks like this
 .. code-block:: python
 
     from ereports.engine.datasource import Datasource
-    from django.contrib.admin.models import User
+    from django.contrib.auth.models import User
+
 
     class UserDataSource(Datasource):
         model = User
@@ -66,6 +70,7 @@ Edit the :file:`users.py` and add the following code
 .. code-block:: python
 
     from ereports.engine.report import BaseReport
+
 
     class UserReport(BaseReport):
         datasource = UserDataSource.as_datasource()

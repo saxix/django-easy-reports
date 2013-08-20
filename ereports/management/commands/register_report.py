@@ -79,18 +79,6 @@ class Command(BaseCommand):
                     cfg.target_model = ContentType.objects.get_for_model(model)
                     cfg.published = True
 
-                    f = []
-                    if hasattr(model, 'office'):
-                        f.append("office={{selected_office}}")
-                    elif hasattr(model, 'contract'):
-                        f.append("contract.office={{selected_office}}")
-                    elif hasattr(model, 'employee'):
-                        f.append("employee.office={{selected_office}}")
-
-                    f.extend(report.list_filter)
-
-                    cfg.filtering = "\r\n".join(f)
-
                     cfg.cache_key = keygen()
                 cfg.save()
                 if verbosity >= 1:
