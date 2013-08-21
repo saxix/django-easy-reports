@@ -1,3 +1,6 @@
+.. include:: ../globals
+.. _ref_report:
+
 =============
 Report
 =============
@@ -6,4 +9,3 @@ Report
    :synopsis: REport
 
 .. class:: BaseReport
-

@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include
 from django.contrib import admin
 from django.contrib.auth.models import User
 from demoproject.demoapp.admin import DemoModelAdmin
@@ -24,5 +24,4 @@ public_site.register(DemoModel, DemoModelAdmin)
 
 urlpatterns = patterns('',
                        (r'', include(include(ereports.urls))),
-                       (r'^admin/', include(include(public_site.urls))),
-)
+                       (r'^admin/', include(include(public_site.urls))),)

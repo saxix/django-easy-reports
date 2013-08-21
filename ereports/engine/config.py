@@ -2,7 +2,7 @@
 from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import DateField, DateInput, ChoiceField, HiddenInput
+from django.forms import DateField, DateInput, ChoiceField
 from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -14,10 +14,10 @@ from ereports.utils import get_field_from_path, StartWithList
 class MultiChoiceWidget(forms.SelectMultiple):
     class Media:
         js = (
-            'ereports/multiselect/js/ui.multiselect2.js',
+            'ereports/multiselect/js/ui.multiselect2.min.js',
             'ereports/multiselect/js/plugins/localisation/jquery.localisation-min.js',
-            'ereports/multiselect/js/plugins/tmpl/jquery.tmpl.1.1.1.js',
-            'ereports/multiselect/js/plugins/blockUI/jquery.blockUI.js',
+            'ereports/multiselect/js/plugins/tmpl/jquery.tmpl.1.1.1.min.js',
+            'ereports/multiselect/js/plugins/blockUI/jquery.blockUI.min.js',
         )
         css = {'all': ("ereports/multiselect/css/ui.multiselect2.css",)}
 
@@ -280,14 +280,16 @@ def reportform_factory(report, bases=(ConfigurationForm,), **kwargs):
                 field_display_order.append(fieldpath)
                 attrs[fieldpath] = get_field_from_bases(bases, fieldpath, None)
 
+    choice_field_class = getattr(report, 'choice_field_class', None) or ChoiceField
+
     orders = kwargs.get('order_by', None)
     if orders:
-        attrs['_report_order_by'] = ChoiceField(label='Order by', choices=orders)
+        attrs['_report_order_by'] = choice_field_class(label='Order by', choices=orders)
         field_display_order.append('_report_order_by')
 
     groupby = kwargs.get('groupby', None)
     if groupby:
-        attrs['_report_group_by'] = ChoiceField(label='Group by', choices=groupby)
+        attrs['_report_group_by'] = choice_field_class(label='Group by', choices=groupby)
         field_display_order.append('_report_group_by')
     else:
         groupby = get_field_from_bases(bases, '_report_group_by', None)
@@ -297,21 +299,17 @@ def reportform_factory(report, bases=(ConfigurationForm,), **kwargs):
 
     # add report format options
     if report.formats:
-        if len(report.formats) > 1:
-            formats = [(f[0], f[0]) for f in report.formats]
-            attrs['_format'] = forms.ChoiceField(label='Format',
-                                                 choices=formats)
-        else:
-            attrs['_format'] = forms.CharField(label='Format',
-                                               widget=HiddenInput,
-                                               initial=report.formats[0][0]
-            )
-
+        formats = [(f[0], f[0]) for f in report.formats]
+        attrs['_format'] = choice_field_class(
+            label='Format',
+            choices=formats
+        )
         field_display_order.append('_format')
 
     configure_columns = kwargs.get('configure_columns', None)
     if configure_columns or get_attr_from_bases(bases, 'configure_columns', False):
-        attrs['_report_list_display'] = ColumnsChoiceField(report)
+        columns_choice_field_class = getattr(report, 'columns_choice_field', ColumnsChoiceField)
+        attrs['_report_list_display'] = columns_choice_field_class(report)
         field_display_order.append('_report_list_display')
 
     attrs['_report'] = report

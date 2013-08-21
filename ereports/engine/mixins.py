@@ -85,7 +85,7 @@ class XlsRender(object):
         ws.write(row, 0, '#', style)
 
         for col, fieldname in enumerate(context['report'].headers, start=1):
-            ws.write(row, col, fieldname, heading_xf)
+            ws.write(row, col, str(fieldname), heading_xf)
             ws.col(col).width = 5000
         ws.row(row).height = 500
 

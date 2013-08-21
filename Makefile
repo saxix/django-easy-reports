@@ -14,7 +14,8 @@ demo:
 	pip install -r ereports/requirements/install.pip
 	pip install -r ereports/requirements/testing.pip
 	pip install -r demo/demoproject/requirements.pip
-	./manage.py syncdb --noinput --migrate --all
+	./manage.py syncdb --noinput --migrate
+	./manage.py loaddata ereports_demo.json
 	./manage.py register_report -m demoproject.demoapp.reports
 
 
@@ -25,6 +26,15 @@ clean:
 	find . -name "*.orig" -prune | xargs rm -rf
 	rm -f coverage.xml flake.out pep8.out pytest.xml
 
+pep8:
+	pep8 demo/ ereports/ \
+	    --max-line-length=120 \
+	    --exclude=migrations,factories,settings,tests \
+	    --ignore E501,E401,W391,E128,E261
+
+flake8:
+	flake8 --max-line-length=120 --exclude=migrations,factories,settings,tests \
+	    --ignore=E501,E401,W391,E128,E261 --format pylint demo/ ereports/
 
 docs:
 	mkdir -p ${BUILDDIR}/docs
