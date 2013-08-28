@@ -78,6 +78,7 @@ class Command(BaseCommand):
                     cfg.columns = "\r\n".join([col.name for col in report.datasource.columns])
                     cfg.target_model = ContentType.objects.get_for_model(model)
                     cfg.published = True
+                    cfg.filtering = "\r\n".join(report.list_filter)
 
                     cfg.cache_key = keygen()
                 cfg.save()
