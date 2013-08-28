@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% load ereports static %}
+    <title>{{ report.title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'ereports/css/ereport.css' %}"/>
+    {% block extrastyle %}{% endblock %}
+</head>
+<body>
+{% block header %}
+    <table id="header" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="first" valign="top">
+                created on<br/> {% now "jS F Y H:i e" %}
+            </td>
+            <td class="second">
+                <div class="text">
+                    <h1>Company</h1>
+                    <h2>Department</h2>
+                    <h3>{% block report_title %}{{ report.title }}{% endblock %}</h3>
+                </div>
+            </td>
+            <td align="right" valign="top">
+                <table id="report-filters" border="0" cellpadding="0" cellspacing="0">
+                {% for k,v in filters_legend|humanize_filters %}
+                    <tr><th>{{ k }}<th><td>{{ v }}</td></tr>
+                {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock header %}
+
+<div class="clear"></div>
+
+{% block data %}
+    <table class="data nobordspacpad">
+
+        <tr class="header">
+            <th class="column first">#</th>
+            {% for fieldname in report.headers %}
+                <th class="column {% if forloop.last %}last{% endif %}">{{ fieldname|title }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for row in report %}
+          <tr class="row {% cycle 'row1' 'row2' %} {% if forloop.last %}last{% endif %} ">
+            <td class="cell first nobr">{{ forloop.counter }}</td>
+            {% for _, col in row.items %}
+                <td class="col_{{ col|col_to_css_class }} cell nobr {% if forloop.last %}last{% endif %} {% cycle 'odd' 'even' %}">
+                  {{ col|with_widget }}
+                </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+        {% if SUMMARY_FIELDS %}
+        <tr class="row totals">
+            <th colspan="1">Sub Total</th>
+            {% for col_name in report.list_display %}
+                {% if col_name in SUMMARY_FIELDS %}
+                    <th class="cell total">{% subtotal report rows col_name %}</th>
+                {% else %}
+                    <th class="cell total">&nbsp;</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endif %}
+
+
+    </table>
+{# key:{{ hash }} #}
+{% endblock data %}
+{#    <hr/>#}
+{#    <textarea rows="100" cols="10" style="width: 100%">#}
+{#        {{ report.datasource.query }}#}
+{#    </textarea>#}
+</body>
+</html>

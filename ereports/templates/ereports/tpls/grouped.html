@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% load ereports static %}
+    <title>{% block title %}WFP PASportNG Report {{ report.title }} {{ selected_office }}{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'ereports/css/ereport.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'ereports/css/report.css' %}"/>
+    {% block extrastyle %}{% endblock %}
+</head>
+<body>
+{% block header %}
+    <table id="header" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="first" valign="top">
+                <div class="logo">
+                    <img align="top" src="{% static 'pasportng/img/logo_wfp_payslip_1.png' %}" width="200px" alt=""/>
+                </div>
+                created on<br/> {% now "jS F Y H:i e" %}
+            </td>
+            <td class="second">
+                <div class="text">
+                    <h1>United Nations - World Food Programme</h1>
+
+                    <h2>Human Resources Report - {{ selected_office }}</h2>
+
+                    <h3>{% block report_title %}{{ report.title }}{% endblock %}</h3>
+                </div>
+            </td>
+            <td align="right" valign="top">
+                <table id="report-filters" border="0" cellpadding="0" cellspacing="0">
+                    {% for k,v in filters_legend|humanize_filters %}
+                        <tr>
+                            <th>
+                                {{ k }}
+                            <th>
+                                <td>{{ v }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock header %}
+
+<div class="clear"></div>
+
+{% block data %}
+    <table class="data nobordspacpad">
+        {% block table_headers %}
+            <tr class="header">
+                <th class="column first">#</th>
+                {% for fieldname in report.headers %}
+                    {% if not col.sys_only %}
+                        <th class="column {% if forloop.last %}last{% endif %}">{{ fieldname }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endblock table_headers %}
+
+
+        {% for group, rows in groups %}
+            {% block group_header %}
+            <tr class="dutystation_row">
+                <td colspan="{{ report.headers|length|add:1 }}">
+                    <div class="dutystation">{{ group }}</div>
+                </td>
+            </tr>
+            {% endblock group_header %}
+
+            {% for row in rows %}
+                <tr class="row {% if forloop.counter|divisibleby:2 %}row2{% else %}row1{% endif %} {% if forloop.last %}first{% endif %} ">
+                    <td class="cell first nobr">{{ forloop.counter }}</td>
+                    {% for _, col in row.items %}
+                        {% if not col.column.sys_only %}
+                            <td class="col_{{ col|col_to_css_class }} cell nobr {% if forloop.last %}last{% endif %} {% cycle 'odd' 'even' %}">
+                                {{ col|with_widget }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            {% block subtotal %}
+            <tr class="row subtotals">
+                <th colspan="1">Sub Total</th>
+                {% for col_name in report.display_order %}
+                    {% if col_name in report.column_totals %}
+                        <th class="cell total">{% subtotal report rows col_name %}</th>
+                    {% else %}
+                        <th class="cell total">&nbsp;</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endblock subtotal %}
+        {% endfor %}
+
+        {% block totals %}
+        <tr class="row totals">
+            <th colspan="1">Totals</th>
+            {% for col_name in report.display_order %}
+                {% if col_name in report.column_totals %}
+                    <th class="cell total">{% total report col_name %}</th>
+                {% else %}
+                    <th class="cell total">&nbsp;</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endblock totals %}
+    {% block last_row %}
+    {% endblock last_row %}
+
+    </table>
+{% endblock data %}
+{#    <hr/>#}
+{#    <textarea rows="100" cols="10" style="width: 100%">#}
+{#        {{ report.datasource.query }}#}
+{#    </textarea>#}
+</body>
+</html>

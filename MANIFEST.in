@@ -1,0 +1,11 @@
+include README
+include MANIFEST.in
+include AUTHORS
+include LICENSE
+include CHANGES
+include setup.py
+recursive-include ereports *.py
+recursive-include ereports/templates *.html
+recursive-include ereports/static *
+recursive-include ereports/requirements *
+

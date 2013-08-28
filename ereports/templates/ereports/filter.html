@@ -1,0 +1,35 @@
+{% block content %}
+    <style>
+        h2 {
+            width: 100%;
+            border-bottom: 3px solid #000000;
+            font-weight: bold;
+        }
+
+        table.reports td {
+            line-height: 30px;
+            border-bottom: 1px solid #000000;
+        }
+
+        td.format {
+            width: 80px;
+            text-align: center;
+            border-left: 1px solid #000000;
+        }
+
+        .multiselect {
+            width: 500px;
+            height: 300px;
+        }
+
+    </style>
+    <div>&nbsp;</div>
+    <div>
+        <form action="" method="post" id="report-form">
+            {% csrf_token %}
+            <table>{{ form }}</table>
+            <input type="submit" name="apply">
+        </form>
+    </div>
+{#    {{ query }}#}
+{% endblock %}
