@@ -174,6 +174,10 @@ class StringFormatColumn(Column):
 class DecimalColumn(Column):
     wraps = Decimal
 
+    def get_value(self, obj, datasource):
+        value = self._get_value_from_attr(obj, self.attr, datasource)
+        return RowValue(self.wraps(value), self)
+
 
 class DateColumn(Column):
     wraps = datetime.date
