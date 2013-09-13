@@ -8,6 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'ProcessQueue'
+        db.create_table('ereports_processqueue', (
+            ('executed', self.gf('django.db.models.fields.DateField')(default=None, null=True)),
+            ('report', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['ereports.ReportConfiguration'])),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('configuration', self.gf('django.db.models.fields.TextField')()),
+        ))
+        db.send_create_signal('ereports', ['ProcessQueue'])
+
         # Adding field 'ReportConfiguration.customize_columns'
         db.add_column('ereports_reportconfiguration', 'customize_columns',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
