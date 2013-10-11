@@ -12,7 +12,7 @@ class ReportRender(object):
         self.report = report
 
     def render(self, request, context, **response_kwargs):
-        context['total_columns_num'] = len(self.report.datasource.columns)
+        context['total_columns_num'] = len(self.report.headers)
         return super(ReportRender, self).render(request, context, **response_kwargs)
 
 
