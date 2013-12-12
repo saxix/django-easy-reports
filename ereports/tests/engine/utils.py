@@ -16,9 +16,9 @@ class TestGetTablesForQuery(TestCase):
     def test_get_tables_children(self):
         qs = Permission.objects.filter(name='*', content_type=ContentType.objects.filter(name='*'))
         tables = get_tables_for_query(qs.query)
-        self.assertEqual(tables, ['auth_permission', 'django_content_type'])
+        self.assertEqual(sorted(tables), ['auth_permission', 'django_content_type'])
 
     def test_get_tables_children_wherenode(self):
         qs = Permission.objects.filter(Q(name__startswith='a'), Q(content_type__name='*'))
         tables = get_tables_for_query(qs.query)
-        self.assertEqual(tables, ['auth_permission', 'django_content_type'])
+        self.assertEqual(sorted(tables), ['auth_permission', 'django_content_type'])

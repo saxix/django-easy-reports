@@ -3,10 +3,12 @@ from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.models import User
 from django.test.testcases import TestCase
 from django_dynamic_fixture import G
+import itertools
 import mock
 from ereports.engine.cache import DummyCacheManager, DatasourceCacheManager
 from ereports.engine.columns import Column, CalcColumn, ColumnCallable, BooleanColumn, OptionalColumn
 from ereports.engine.datasource import Datasource, RecordFilteredError
+from ereports.tests import app
 from ereports.tests.app.models import SimpleDemoModel, DemoOptionalModel
 from ereports.utils import get_verbose_name
 
@@ -126,6 +128,7 @@ class TestDatasource(TestCase):
 
     def test_custom_filter(self):
         G(SimpleDemoModel, n=10, char='abc')
+        app.models.counter = itertools.count()
         ds = Datasource.as_datasource(model=SimpleDemoModel, columns=[Column('filter_source')])
         ds._get_queryset = mock.Mock(wraps=ds._get_queryset)
         ds._create_result_cache = mock.Mock(wraps=ds._create_result_cache)
