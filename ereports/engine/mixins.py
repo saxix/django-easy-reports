@@ -53,7 +53,7 @@ class XlsRender(object):
             'TimeColumn': 'hh:mm',
             'IntegerColumn': '#,##',
             'DecimalColumn': '#,##0.00',
-            'BooleanColumn': 'boolean',
+            'BooleanColumn': 'general',
             'CurrencyColumn': '"$"#,##0.00);[Red]("$"#,##0.00)',
         }
 
@@ -75,7 +75,6 @@ class XlsRender(object):
         from xlwt import Workbook, XFStyle, easyxf
 
         w = Workbook(encoding='utf-8')
-        w.owner = b'UN World Food Programme'
 
         ws = w.add_sheet('Report')
         style = XFStyle()
