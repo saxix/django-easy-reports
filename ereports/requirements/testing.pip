@@ -9,5 +9,5 @@ pytest==2.5.1
 pytest-cov==1.6
 pytest-django==2.6
 pytest-pep8==1.0.5
-WebTest==2.0.13
+WebTest==2.0.14
 Sphinx==1.2.1
