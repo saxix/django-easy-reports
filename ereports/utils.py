@@ -21,10 +21,11 @@ def currencyformat(value, thousand_sep=',', decimal_sep='.'):
 
     Usage: {% value_to_format|currencyformat %}
     """
-    integer_part_string = str(int(value))
+    sign = {False: '-', True: ''}[value > 0]
+    integer_part_string = str(abs(int(value)))
     f = lambda x, y, list=[]: f(x[:-y], y, [(x[-y:])] + list) if x else list
     integer_part = thousand_sep.join(f(integer_part_string, 3))
-    return "%s%s%s" % (integer_part, decimal_sep, ("%0.2f" % value)[-2:])
+    return "%s%s%s%s" % (sign, integer_part, decimal_sep, ("%0.2f" % value)[-2:])
 
 
 def fqn(o):
