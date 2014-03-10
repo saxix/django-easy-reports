@@ -40,7 +40,7 @@ class TestGroup(TestCase):
                                                         'group_by': (is_staff, 'username'),
                                                         'datasource': ds})
         report = TestReport.as_report()
-        self.assertSequenceEqual(dict(report.get_groups()).keys(), ['True', 'False'])
+        self.assertItemsEqual(dict(report.get_groups()).keys(), ['True', 'False'])
         self.assertSequenceEqual(list(report),
                                  [(False, 'username0'),
                                   (False, 'username2'),

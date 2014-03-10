@@ -1,7 +1,7 @@
-from django.db.models.query import EmptyQuerySet
+from django.db.models.query import EmptyQuerySet, QuerySet
 
 
-class FakeQuerySet(EmptyQuerySet):
+class FakeQuerySet(QuerySet):
     """Turn a list into a Django QuerySet... kind of."""
 
     def __init__(self, model=None, query=None, using=None, items=None):
@@ -11,5 +11,5 @@ class FakeQuerySet(EmptyQuerySet):
     def count(self):
         return len(self)
 
-    def _clone(self):
+    def _clone(self, klass=None, setup=False, **kwargs):
         return FakeQuerySet(self.model, items=self._result_cache)

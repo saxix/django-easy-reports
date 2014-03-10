@@ -171,7 +171,7 @@ class TestBaseReport(WebTest):
 
     def test_format_labels(self):
         r = SimpleDemoReport.as_report()
-        self.assertEqual(r.get_format_labels(), ['html', 'xls'])
+        self.assertSequenceEqual(sorted(r.get_format_labels()), ['html', 'xls'])
 
     def test_get_renderer_class_format(self):
         r = SimpleDemoReport.as_report()
