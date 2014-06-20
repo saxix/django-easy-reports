@@ -3,7 +3,7 @@ import datetime
 import os
 
 NAME = 'django-easy-reports'
-VERSION = __version__ = (0, 2, 0, 'final', 0)
+VERSION = __version__ = (0, 3330, 'final', 0)
 __author__ = 'sax'
 
 
