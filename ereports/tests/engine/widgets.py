@@ -54,6 +54,7 @@ def test_datewidget():
     c = Column('normal', format="%Y-%m-%d")
     r = RowValue(datetime.date(2000, 1, 1), column=c)
     assert DateWidget.render(r) == "2000-01-01"
+    assert DateWidget.render_xls(r) == datetime.date(2000, 1, 1)
 
     r = RowValue(None, column=c)
     assert DateWidget.render(r) == ""
