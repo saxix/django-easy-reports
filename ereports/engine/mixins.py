@@ -48,7 +48,7 @@ class XlsRender(object):
         from xlwt import easyxf
 
         FORMATS = {
-            'DateColumn': 'DD MMM-YY',
+            'DateColumn': 'DD-MMM-YYYY',
             'DateTimeColumn': 'DD MMD YY hh:mm',
             'TimeColumn': 'hh:mm',
             'IntegerColumn': '#,##',
@@ -96,7 +96,7 @@ class XlsRender(object):
             for idx, (fieldname, rowvalue) in enumerate(data.items()):
                 style = styles[rowvalue.column.name]
                 try:
-                    ws.write(rownum + 1, idx + 1, with_widget(rowvalue), style)
+                    ws.write(rownum + 1, idx + 1, with_widget(rowvalue, format='xls'), style)
                 except Exception:
                     #logger.warning("TODO refine this exception: %s" % e)
                     ws.write(rownum + 1, idx + 1, smart_str(with_widget(rowvalue)), style)

@@ -49,6 +49,11 @@ def test_with_widget():
     c = Column('user.first_name')
     r = RowValue('Test', column=c)
     assert with_widget(r) == 'Test'
+    assert with_widget(r, format='foo') == 'Test'
+
+    c = Column('normal', format="%Y-%m-%d")
+    r = RowValue(datetime.date(2000, 1, 1), column=c)
+    assert with_widget(r, format='xls') == datetime.date(2000, 1, 1)
 
     e = RowValueError('Test')
     assert with_widget(e) == 'Test'

@@ -36,9 +36,11 @@ def col_to_css_class(row_value):
 
 
 @register.filter
-def with_widget(row_value):
+def with_widget(row_value, format=None):
     if isinstance(row_value, RowValue):
-        return row_value.column.widget.render(row_value)
+        widget = row_value.column.widget
+        render = getattr(widget, 'render_{}'.format(format), widget.render)
+        return render(row_value)
     elif isinstance(row_value, RowValueError):
         return str(row_value)
     else:
