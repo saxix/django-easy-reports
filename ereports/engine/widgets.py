@@ -41,6 +41,12 @@ class DateWidget(ColumnWidget):
             return raw_value.value.strftime(raw_value.column.format)
         return ""
 
+    @classmethod
+    def render_xls(cls, raw_value):
+        if raw_value.value is not None:
+            return raw_value.value
+        return ""
+
 
 class TimeWidget(ColumnWidget):
     @classmethod
