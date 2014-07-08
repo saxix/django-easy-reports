@@ -89,7 +89,6 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
             self.report = self.get_report(**report_attributes)
 
             self.finalize_filters(*filters, **kwfilters)
-            self.report.datasource.add_filters(*filters, **kwfilters)
 
             ds = self.report.datasource
             m = hashlib.md5()
