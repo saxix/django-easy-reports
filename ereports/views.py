@@ -69,6 +69,9 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
         kwargs.setdefault('form', self.get_search_form())
         return super(ReportFilter, self).get(request, *args, **kwargs)
 
+    def finalize_filters(self, *filters, **kwfilters):
+        self.report.datasource.add_filters(*filters, **kwfilters)
+
     def _run_report(self, request, *args, **kwargs):
         pass
 
@@ -85,6 +88,7 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
             report_attributes = form.get_report_attributes()
             self.report = self.get_report(**report_attributes)
 
+            self.finalize_filters(*filters, **kwfilters)
             self.report.datasource.add_filters(*filters, **kwfilters)
 
             ds = self.report.datasource
