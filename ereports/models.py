@@ -44,7 +44,7 @@ class ReportConfiguration(models.Model):
     name = models.CharField(max_length=100, unique=True)
     group = models.ForeignKey(ReportGroup)
     template = models.ForeignKey(ReportTemplate, blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=2000, blank=True, null=True)
 
     report_class = models.CharField(max_length=200, validators=[validate_report_class])
 
