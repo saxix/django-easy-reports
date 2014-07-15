@@ -72,6 +72,24 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
     def _run_report(self, request, *args, **kwargs):
         pass
 
+    def finalize_filters(self, *filters, **kwfilters):
+        self.report.datasource.add_filters(*filters, **kwfilters)
+        return filters, kwfilters
+
+    def render_in_background(self):
+        """Hook to allow running rendering of report in background
+
+        Check if report needs to be rendered in background task
+        """
+        return False
+
+    def background_render_task(self, request, form, **context):
+        """Hook to allow running rendering of report in background
+
+        Overwrite this method as background task
+        """
+        pass
+
     def post(self, request, *args, **kwargs):
         self.config = self.get_config()
         self.report = self.get_report()
@@ -85,9 +103,8 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
             report_attributes = form.get_report_attributes()
             self.report = self.get_report(**report_attributes)
 
-            self.report.datasource.add_filters(*filters, **kwfilters)
+            filters, kwfilters = self.finalize_filters(*filters, **kwfilters)
 
-            ds = self.report.datasource
             m = hashlib.md5()
             m.update("filters={0}".format(str(kwfilters)))
             m.update("list_display={0}".format(str(self.report.list_display)))
@@ -99,10 +116,20 @@ class ReportFilter(FilterQuerysetMixin, TemplateView):
             if page:
                 return page
 
+            context['report'] = self.report
+            context['filters_legend'] = form.get_filters_summary()
+            context['filters'] = kwfilters
+
+            if self.render_in_background():
+                context["nfilters"] = filters
+                self.background_render_task(request, form, **context)
+                messages.error(self.request, "Report is being generated in the background.")
+                kwargs.setdefault('form', form)
+                return super(ReportFilter, self).get(request, *args, **kwargs)
+
+            ds = self.report.datasource
+
             if ds:
-                context['report'] = self.report
-                context['filters_legend'] = form.get_filters_summary()
-                context['filters'] = kwfilters
                 renderer = self.report.get_renderer_for_format(form.cleaned_data['_format'])
                 page = renderer.render_to_response(request, **context)
 
