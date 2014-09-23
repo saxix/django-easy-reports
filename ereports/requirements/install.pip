@@ -1,4 +1,4 @@
-six==1.7.3
-xlwt==0.7.5
-South==1.0
 Django>=1.4.5
+six>=1.8.0
+South>=1.0
+xlwt>=0.7.5

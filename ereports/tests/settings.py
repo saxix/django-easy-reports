@@ -23,6 +23,8 @@ INSTALLED_APPS = (
     'ereports.tests.app',
 )
 
+MIDDLEWARE_CLASSES = ()
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

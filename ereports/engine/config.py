@@ -5,9 +5,9 @@ from django.core.exceptions import ValidationError
 from django.forms import DateField, DateInput, ChoiceField
 from django.utils.datastructures import SortedDict
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.forms.util import flatatt
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from ereports.utils import get_field_from_path, StartWithList
 
 
@@ -84,9 +84,9 @@ class DateRangeInput(DateInput):
         final_attrs_end['name'] = "%s_end" % base_final_attrs['name']
 
         if start != '':
-            final_attrs_start['value'] = force_unicode(self._format_value(start))
+            final_attrs_start['value'] = force_text(self._format_value(start))
         if end != '':
-            final_attrs_end['value'] = force_unicode(self._format_value(end))
+            final_attrs_end['value'] = force_text(self._format_value(end))
 
         return mark_safe(u'From: <input%s /> To: <input%s />' % (flatatt(final_attrs_start), flatatt(final_attrs_end)))
 

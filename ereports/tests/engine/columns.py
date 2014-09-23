@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from decimal import Decimal
 from unittest import TestCase
+from six import text_type
 
 from ereports.engine.columns import Column, normalize_name, get_column_for_attribute, CharColumn, \
     IntegerColumn, DateColumn, DecimalColumn, RowValue, BooleanColumn, CalcColumn, ColumnCallable, OptionalColumn, \
@@ -158,7 +159,7 @@ class TestRowValue(TestCase):
         self.assertEqual(r.value, value)
         self.assertEqual(str(r), str(value))
         self.assertEqual(repr(r), repr(value))
-        self.assertEqual(unicode(r), unicode(value))
+        self.assertEqual(text_type(r), text_type(value))
         self.assertEqual(r, r)
         self.assertEqual(r, value)
         self.assertNotEqual(r, 'wrong')

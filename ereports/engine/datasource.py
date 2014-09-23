@@ -4,6 +4,7 @@ import copy
 import logging
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.functional import curry
+from six import iteritems, string_types
 from ereports.engine.cache import DatasourceCacheManager, DummyCacheManager
 from ereports.engine.columns import Column, get_column_for_attribute, RowValueError
 from ereports.engine.utils import get_tables_for_query
@@ -54,7 +55,7 @@ class Datasource(object):
         self._custom_filters = kwargs.pop('custom_filters', [])
         self.extras = kwargs.pop('extras', {})
 
-        for key, value in kwargs.iteritems():
+        for key, value in iteritems(kwargs):
             setattr(self, key, value)
 
         if self.use_cache and self.cache_manager is None:
@@ -85,7 +86,7 @@ class Datasource(object):
         else:
             columns = list(_columns)
             for idx, colname in enumerate(_columns):
-                if isinstance(colname, basestring):
+                if isinstance(colname, string_types):
                     columns[idx] = factory(colname)(colname, model=model)
                 elif isinstance(colname, Column):
                     colname.model = model

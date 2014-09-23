@@ -1,4 +1,4 @@
-import StringIO
+from six import StringIO
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.encoding import smart_str
@@ -101,7 +101,7 @@ class XlsRender(object):
                     #logger.warning("TODO refine this exception: %s" % e)
                     ws.write(rownum + 1, idx + 1, smart_str(with_widget(rowvalue)), style)
 
-        f = StringIO.StringIO()
+        f = StringIO()
         w.save(f)
         f.seek(0)
 
