@@ -1,5 +1,6 @@
 import os
 import sys
+import django
 from django.conf import settings
 
 
@@ -10,14 +11,17 @@ def pytest_configure(config):
     if not settings.configured:
         os.environ['DJANGO_SETTINGS_MODULE'] = 'ereports.tests.settings'
 
+    try:
+        django.setup()
+    except AttributeError:
+        pass
 
-    settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS) + (
-        'ereports',
-        'ereports.tests.app',
-    )
+    # settings.INSTALLED_APPS = tuple(settings.INSTALLED_APPS) + ('ereports',
+    #                                                             'ereports.tests.app',)
+
     settings.LOGGING['loggers'][''] = {'handlers': ['null'],
-                          'propagate': True,
-                          'level': 'DEBUG'}
+                                       'propagate': True,
+                                       'level': 'DEBUG'}
 
     os.environ['PREFIX'] = os.path.join(here, "~build")
 

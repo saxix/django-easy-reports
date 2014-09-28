@@ -45,7 +45,7 @@ class DemoModel(models.Model):
 
     char = models.CharField(max_length=255)
     integer = models.IntegerField()
-    logic = models.BooleanField()
+    logic = models.BooleanField(default=False)
     null_logic = models.NullBooleanField()
     date = models.DateField()
     datetime = models.DateTimeField()

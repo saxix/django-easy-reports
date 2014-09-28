@@ -2,10 +2,10 @@
 from importlib import import_module
 from inspect import isclass
 from logging import getLogger
+from six import string_types, iteritems
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.utils.encoding import smart_str
-from six import string_types
 
 
 logger = getLogger(__name__)
@@ -203,7 +203,7 @@ def filter_dictionary(dictionary, filter_func):
         test_func = lambda x: x == filter_func
     else:
         test_func = filter_func
-    for key, value in dictionary.iteritems():
+    for key, value in iteritems(dictionary):
         if test_func(value):
             return key
 

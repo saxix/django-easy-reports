@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
+from six import iteritems, string_types
 from ereports.engine.config import ConfigurationForm
 from ereports.engine.datasource import Datasource, DatasourceRow
 from ereports.engine.renderer import BaseHtmlRender
@@ -29,7 +30,7 @@ class BaseGrouper(object):
         for datasourcerow in ds:
             if callable(self.group_by):
                 group_name = self.group_by(datasourcerow._original)
-            elif isinstance(self.group_by, basestring):
+            elif isinstance(self.group_by, string_types):
                 try:
                     col = self.report.get_column_by_name(self.group_by)
                     group_name = col.get_value(datasourcerow._original, self.report.datasource).value
@@ -64,7 +65,7 @@ class BaseGrouper(object):
 
         #returns groups ordered
         sorted_groups = zip(self._dict.keys(), self._dict.values())
-        sorted_groups.sort(key=lambda x: smart_unicode(x[0]))
+        sorted_groups.sort(key=lambda x: smart_text(x[0]))
 
         return sorted_groups
 
@@ -88,7 +89,7 @@ class BaseReport(object):
 
     def __init__(self, **kwargs):
         self.extras = kwargs.pop('extras', {})
-        for key, value in kwargs.iteritems():
+        for key, value in iteritems(kwargs):
             setattr(self, key, value)
         self.title = self.title or fqn(self)
 

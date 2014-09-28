@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from decimal import Decimal, InvalidOperation
 from django import template
+from six import string_types
 from ereports.engine.columns import RowValue, RowValueError
 from ereports.utils import currencyformat, fqn
 
@@ -102,7 +103,7 @@ def format_raw_value(row_value):
 @register.simple_tag()
 def subtotal(report, rows, col):
     try:
-        if isinstance(col, basestring):
+        if isinstance(col, string_types):
             col = report.get_column_by_name(col)
         tot = sum(r[col.name].value or 0 for r in rows)
         return format_raw_value(RowValue(tot, col))
@@ -113,7 +114,7 @@ def subtotal(report, rows, col):
 @register.simple_tag()
 def total(report, col):
     try:
-        if isinstance(col, basestring):
+        if isinstance(col, string_types):
             col = report.get_column_by_name(col)
         values = report.get_column_values(col.name)
         return format_raw_value(RowValue(sum(values), col))

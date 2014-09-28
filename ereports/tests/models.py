@@ -1,3 +1,4 @@
+from six import text_type
 from django.core.exceptions import ValidationError
 from django.test.testcases import TestCase
 from ereports.models import ReportConfiguration, ReportGroup, ReportTemplate, validate_report_class
@@ -6,13 +7,13 @@ from ereports.models import ReportConfiguration, ReportGroup, ReportTemplate, va
 class TestReportGroup(TestCase):
     def test_init(self):
         r = ReportGroup(name="Name")
-        self.assertEqual(unicode(r), u"Name")
+        self.assertEqual(text_type(r), u"Name")
 
 
 class TestReportTemplate(TestCase):
     def test_init(self):
         r = ReportTemplate(name="Name", body="Body Text", system=True)
-        self.assertEqual(unicode(r), u"Name")
+        self.assertEqual(text_type(r), u"Name")
 
 
 class TestValidateReportClass(TestCase):
@@ -27,7 +28,7 @@ class TestValidateReportClass(TestCase):
 class TestReportConfiguration(TestCase):
     def test_unicode(self):
         r = ReportConfiguration(name="Name")
-        self.assertEqual(unicode(r), u"Name")
+        self.assertEqual(text_type(r), u"Name")
 
     def test_title(self):
         r = ReportConfiguration(name="Name")

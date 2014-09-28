@@ -5,6 +5,7 @@ import operator
 import logging
 import datetime
 from django.utils.encoding import smart_str
+from six import text_type, string_types
 from ereports.engine.widgets import ColumnWidget, CurrencyWidget, YesNoWidget, DateWidget, TimeWidget
 from django.db import models
 from ereports.utils import get_verbose_name, get_field_from_path, get_attr
@@ -38,7 +39,7 @@ class RowValue(object):
         return repr(self.value)
 
     def __unicode__(self):
-        return unicode(self.value)
+        return text_type(self.value)
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -56,7 +57,7 @@ class RowValue(object):
 
 class Column(object):
     widget = ColumnWidget
-    wraps = basestring
+    wraps = string_types
     default_format = None
 
     def __init__(self, attr, title=None, manipulator=None, model=None, widget=None, sys_only=False, format=None,

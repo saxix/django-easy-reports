@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from collections import namedtuple
+from six import string_types
 from ereports.engine.cache import monitor_model
 from ereports.utils import fqn, get_attr
 
@@ -37,7 +38,7 @@ class Registry(object):
     def __getitem__(self, item):
         if isinstance(item, int):
             return self.reports[item]
-        elif isinstance(item, basestring):
+        elif isinstance(item, string_types):
             return filter(lambda el: el.classname == item, self)[0][1]
 
     def __contains__(self, item):
