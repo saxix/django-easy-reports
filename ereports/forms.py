@@ -30,4 +30,19 @@ class ReportConfigurationForm(ModelForm):
 
     class Meta:
         model = ReportConfiguration
-        fields = '__all__'
+        fields = (
+            'name',
+            'group',
+            'template',
+            'description',
+            'report_class',
+            'target_model',
+            'published',
+            'select_related',
+            'use_distinct',
+            'columns',
+            'filtering',
+            'ordering',
+            'groupby',
+            'cache_key',
+        )
