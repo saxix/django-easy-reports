@@ -30,3 +30,4 @@ class ReportConfigurationForm(ModelForm):
 
     class Meta:
         model = ReportConfiguration
+        fields = '__all__'
