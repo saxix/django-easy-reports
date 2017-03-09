@@ -1,6 +1,6 @@
 coverage==4.3.4
 django-dynamic-fixture==1.9.3
-django-webtest==1.8.0
+django-webtest==1.9.1
 flake8==3.3.0
 mock==2.0.0
 pep8==1.7.0
